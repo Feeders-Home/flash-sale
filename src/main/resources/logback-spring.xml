@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <springProperty scope="context" name="projectHost" defaultValue="local" source="spring.application.host"/>
+    <springProperty scope="context" name="springProfilesActive" source="spring.profiles.active"/>
+    <property name="logFilePattern"
+        value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] ${PID:-} %t\\\(%X{threadId}\\\) \\\(%c.%M,%F:%L\\\) %level -- [%X{requestId}] %msg%n"/>
+    <property name="logFilePath" value="/var/logs"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${logFilePattern}</pattern>
+        </encoder>
+    </appender>
+
+    <springProfile name="prod,test,dev">
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${logFilePath}/${projectHost}/common_all-v1.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${logFilePath}/${projectHost}/common_all-v1-%d{yyyy-MM-dd}-%i.gz</fileNamePattern>
+                <maxHistory>30</maxHistory>
+                <cleanHistoryOnStart>true</cleanHistoryOnStart>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>500MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>${logFilePattern}</pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="jlh">
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+</configuration>
