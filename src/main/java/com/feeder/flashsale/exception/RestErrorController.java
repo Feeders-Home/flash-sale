@@ -3,8 +3,7 @@ package com.feeder.flashsale.exception;
 import java.util.Map;
 
 
-import com.feeder.flashsale.logging.AutoNamingLoggerFactory;
-
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
@@ -23,8 +22,8 @@ import static com.google.common.collect.ImmutableMap.of;
  * error handler.
  */
 @RestController
+@Slf4j
 public class RestErrorController implements ErrorController {
-    private static final Logger logger = AutoNamingLoggerFactory.getLogger();
 
     private static final String PATH = "/error";
 
@@ -38,7 +37,7 @@ public class RestErrorController implements ErrorController {
         int status = (int) errorAttributes.get("status");
         String message = (String) errorAttributes.get("message");
         String path = (String) errorAttributes.get("path");
-        logger.error("Error occurred while access[{}]:{}", path, error);
+        log.error("Error occurred while access[{}]:{}", path, error);
         ErrorRepresentation.ErrorDetail errorDetail =
                 new ErrorRepresentation.ErrorDetail(SYSTEM_ERROR.getCode(), status, error, path,
                         of("detail", message));

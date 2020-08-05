@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-
-import com.feeder.flashsale.logging.AutoNamingLoggerFactory;
-
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,14 +28,13 @@ import static org.springframework.http.HttpStatus.valueOf;
  */
 @RestControllerAdvice
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
-    private final Logger logger = AutoNamingLoggerFactory.getLogger();
 
     @ExceptionHandler(AppException.class)
     public ResponseEntity<ErrorRepresentation.ErrorDetail> handleAppException(AppException ex,
                                                                               HttpServletRequest request) {
-        this.logger.error("App error:", ex);
+        this.log.error("App error:", ex);
         ErrorRepresentation representation = new ErrorRepresentation(ex, request.getRequestURI());
         return new ResponseEntity<>(representation.getError(), new HttpHeaders(),
                 valueOf(ex.getError().getStatus()));
@@ -57,7 +54,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         Map<String, Object> error = ex.getConstraintViolations().stream()
             .collect(Collectors.toMap(c -> c.getPropertyPath().toString(), ConstraintViolation::getMessage));
 
-        this.logger.error("Validation error for [{}]", request.getPathInfo(), ex);
+        this.log.error("Validation error for [{}]", request.getPathInfo(), ex);
         ErrorRepresentation representation =
             new ErrorRepresentation(new RequestValidationException(error), path);
         return representation.getError();
@@ -67,7 +64,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorRepresentation.ErrorDetail> handleGeneralException(Throwable ex,
                                                                                   HttpServletRequest request) {
         String path = request.getRequestURI();
-        this.logger.error("Error occurred while access[{}]:", path, ex);
+        this.log.error("Error occurred while access[{}]:", path, ex);
         ErrorRepresentation representation = new ErrorRepresentation(new SystemException(ex), path);
         return new ResponseEntity<>(representation.getError(), new HttpHeaders(),
                 valueOf(representation.getError().getStatus()));
@@ -87,7 +84,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         } else {
             path = request.getContextPath();
         }
-        this.logger.error("exception while access[{}]", path, ex);
+        this.log.error("exception while access[{}]", path, ex);
         return new ResponseEntity<>(
             new ErrorRepresentation.ErrorDetail(status.value(), status.value(), ex.getMessage(), path, null),
             headers, status);

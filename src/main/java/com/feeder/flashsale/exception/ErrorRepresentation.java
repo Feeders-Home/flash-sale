@@ -3,9 +3,6 @@ package com.feeder.flashsale.exception;
 import java.time.Instant;
 import java.util.Map;
 
-
-import com.feeder.flashsale.logging.RequestIdAwareRepresentation;
-
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
@@ -15,7 +12,7 @@ import static org.apache.commons.collections4.MapUtils.isEmpty;
 /**
  * the response error.
  */
-public class ErrorRepresentation extends RequestIdAwareRepresentation {
+public class ErrorRepresentation {
     private final ErrorDetail error;
 
     ErrorRepresentation(AppException ex, String path) {
