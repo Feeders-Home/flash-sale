@@ -19,10 +19,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * @author zenk.zhang
- * @createdAt 2019-11-01 14:52:18
- */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 

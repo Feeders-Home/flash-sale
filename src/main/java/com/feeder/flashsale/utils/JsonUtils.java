@@ -19,10 +19,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-/**
- * Description: lbi-mobile
- * Created by martingao on 2019/9/28
- */
 public class JsonUtils {
     private JsonUtils() {
         throw new IllegalStateException("JsonUtils class");
