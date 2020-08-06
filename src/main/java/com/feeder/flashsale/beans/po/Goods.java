@@ -1,4 +1,4 @@
-package com.feeder.flashsale.beans;
+package com.feeder.flashsale.beans.po;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
