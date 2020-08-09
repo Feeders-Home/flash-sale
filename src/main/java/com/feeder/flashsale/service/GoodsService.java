@@ -3,5 +3,5 @@ package com.feeder.flashsale.service;
 import com.feeder.flashsale.entity.Goods;
 
 public interface GoodsService {
-    Goods getGoodsByID(long id);
+    Goods getGoodsByID(Long id);
 }
