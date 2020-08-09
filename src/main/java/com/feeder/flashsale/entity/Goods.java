@@ -2,22 +2,21 @@ package com.feeder.flashsale.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.springframework.stereotype.Repository;
+import java.math.BigDecimal;
 
 @Data
 @Accessors(chain = true)
-@Repository
 public class Goods {
 
-    private String id;
+    private Long id;
     private String name;
-    /**
-     * 库存数量
-     */
+    private BigDecimal price;
+    private BigDecimal flash_sale_price;
     private Integer quantity;
-    /**
-     * 描述
-     */
-    private String desc;
+    //不要用缩写desc，这里容易误认成降序排序
+    private String description;
 
+    public Goods(Long id) {
+        this.id = id;
+    }
 }

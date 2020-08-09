@@ -1,21 +1,23 @@
 package com.feeder.flashsale.web;
 
+import com.feeder.flashsale.entity.Goods;
 import com.feeder.flashsale.service.GoodsService;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.server.PathParam;
+
 @RestController
-@Slf4j
 public class GoodsController {
-    GoodsService goodsService;
+    private GoodsService goodsService;
 
     public GoodsController(GoodsService goodsService) {
         this.goodsService = goodsService;
     }
 
-    @GetMapping
-    public String getGoods(long id) {
-        return "hello";
+    @GetMapping("/goods/{id}")
+    public ResponseEntity<Goods> getGoods(@PathParam("id") Long id) {
+        return ResponseEntity.ok(goodsService.getGoodsByID(id));
     }
 }
