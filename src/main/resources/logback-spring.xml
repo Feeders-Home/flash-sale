@@ -34,8 +34,8 @@
         </root>
     </springProfile>
 
-    <springProfile name="jlh">
-        <root level="INFO">
+    <springProfile name="yy">
+        <root level="debug">
             <appender-ref ref="STDOUT"/>
         </root>
     </springProfile>
