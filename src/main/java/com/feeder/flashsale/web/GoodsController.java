@@ -4,6 +4,7 @@ import com.feeder.flashsale.entity.Goods;
 import com.feeder.flashsale.service.GoodsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
@@ -20,4 +21,6 @@ public class GoodsController {
     public ResponseEntity<Goods> getGoods(@PathParam("id") Long id) {
         return ResponseEntity.ok(goodsService.getGoodsByID(id));
     }
+
+
 }
