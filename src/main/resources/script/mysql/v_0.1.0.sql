@@ -2,10 +2,20 @@ use flash_sale;
 
 CREATE TABLE goods
 (
-id varchar(32),
+id LONG,
 name varchar (64),
 quantity int ,
-description varchar (255)
+`description` VARCHAR(255),
+price DECIMAL,
+flash_sale_price DECIMAL
 );
 
-INSERT INTO `goods` (`id`, `name`, `quantity`, `description`) VALUES('1','iPhone8','100',"very cheap");
+CREATE TABLE order_info
+(
+id LONG,
+customer_id LONG,
+goods_id LONG,
+quantity int ,
+total_price DECIMAL
+);
+
