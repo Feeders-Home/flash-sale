@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import java.math.BigDecimal;
 
 @Data
-@Getter
-@Setter
 @Accessors(chain = true)
 @NoArgsConstructor
 public class Goods {
