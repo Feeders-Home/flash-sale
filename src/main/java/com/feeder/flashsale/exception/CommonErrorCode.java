@@ -5,7 +5,7 @@ public enum CommonErrorCode implements ErrorCode {
     REQUEST_VALIDATION_FAILED(400, "请求数据格式验证失败"),
     UNAUTHORIZED(403, "权限验证失败"),
     NOT_FOUND(404, "资源找不到"),
-    NOT_ENOUGH_STOCK(10001,"库存不足");
+    ;
     private int status;
     private String message;
 
