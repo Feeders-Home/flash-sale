@@ -14,7 +14,7 @@ public class FlashSaleController {
         this.flashSaleService = flashSaleService;
     }
 
-    @PostMapping(value = "/orders",consumes = "application/json")
+    @PostMapping(value = "/orders")
     @ResponseBody
     public ResponseEntity addOrder(@RequestParam("goodsId") Long goodsId,
                                    @RequestParam( "quantity") Integer quantity,
