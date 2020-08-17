@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 import com.feeder.flashsale.dao.GoodsDao;
 import com.feeder.flashsale.dao.OrderInfoDao;
-import com.feeder.flashsale.entity.Goods;
 import com.feeder.flashsale.entity.OrderInfo;
-import com.feeder.flashsale.exception.StockException;
+import com.feeder.flashsale.exception.AppException;
+import com.feeder.flashsale.service.flashSale.StockException;
 import com.feeder.flashsale.service.FlashSaleService;
 import com.google.common.collect.ImmutableMap;
 
@@ -28,15 +28,20 @@ public class FlashSaleServiceImpl implements FlashSaleService {
 
 
     @Override
-    @Transactional
-    public int addOrder(Long goodsId, Integer quantity, Long customerId) {
+    @Transactional(rollbackFor = AppException.class)
+    public OrderInfo addOrder(Long goodsId, Integer count, Long customerId) {
         //1.检查商品是否有足够库存
-        if (goodsDao.reduceStock(goodsId, quantity) < 1) {
+        if (goodsDao.reduceStock(goodsId, count) < 1) {
             throw new StockException(NOT_ENOUGH_STOCK, ImmutableMap.of("goodsId",goodsId));
         }
 
-        //4.增加订单
-        OrderInfo orderInfo = new OrderInfo(null, customerId, goodsId, quantity, new BigDecimal(5000));
-        return orderInfoDao.insert(orderInfo);
+        //2.增加订单
+        OrderInfo orderInfo = new OrderInfo()
+                .setCustomerId(customerId)
+                .setGoodsId(goodsId)
+                .setQuantity(count)
+                .setTotalPrice(new BigDecimal(5000));
+        orderInfoDao.insert(orderInfo);
+        return orderInfo;
     }
 }

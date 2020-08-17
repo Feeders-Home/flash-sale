@@ -15,7 +15,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Goods getGoodsByID(Long id) {
+    public Goods getGoodsById(Long id) {
         return goodsDao.selectOne(new Goods(id));
     }
 }
