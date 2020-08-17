@@ -17,8 +17,8 @@ public class Goods {
     @Id
     private Long id;
     private String name;
-//    private BigDecimal price;
-//    private BigDecimal flash_sale_price;
+    private BigDecimal price;
+    private BigDecimal flash_sale_price;
     private Integer quantity;
     //不要用缩写desc，这里容易误认成降序排序
     private String description;

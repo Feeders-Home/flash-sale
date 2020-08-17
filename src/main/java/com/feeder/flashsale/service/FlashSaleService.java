@@ -1,7 +1,9 @@
 package com.feeder.flashsale.service;
 
 
+import com.feeder.flashsale.entity.OrderInfo;
+
 public interface FlashSaleService {
 
-    int addOrder(Long goodsId, Integer quantity,Long userId);
+    OrderInfo addOrder(Long goodsId, Integer quantity, Long userId);
 }
