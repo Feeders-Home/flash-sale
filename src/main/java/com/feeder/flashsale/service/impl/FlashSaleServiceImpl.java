@@ -31,17 +31,9 @@ public class FlashSaleServiceImpl implements FlashSaleService {
     @Transactional
     public int addOrder(Long goodsId, Integer quantity, Long customerId) {
         //1.检查商品是否有足够库存
-        Goods goods = new Goods(goodsId);
-        Goods goodsInDB = goodsDao.selectOne(goods);
-        int quantityInDB = goodsInDB.getQuantity();
-        if (quantityInDB < quantity) {
+        if (goodsDao.reduceStock(goodsId, quantity) < 1) {
             throw new StockException(NOT_ENOUGH_STOCK, ImmutableMap.of("goodsId",goodsId));
         }
-        //2.检查订单金额
-
-        //3.减库存
-        goodsInDB.setQuantity(quantityInDB - quantity);
-        goodsDao.updateByPrimaryKey(goodsInDB);
 
         //4.增加订单
         OrderInfo orderInfo = new OrderInfo(null, customerId, goodsId, quantity, new BigDecimal(5000));
